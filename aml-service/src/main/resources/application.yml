@@ -1,0 +1,25 @@
+spring:
+  kafka:
+    consumer:
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+
+      properties:
+        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+
+        spring.json.trusted.packages: "*"
+        spring.json.value.default.type: com.example.common.event.TransactionReceivedEvent
+  datasource:
+    url: jdbc:postgresql://localhost:5432/aml_db
+    username: aml_user
+    password: aml_pass
+    jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: false
+      properties:
+        hibernate:
+          format_sql: true
+  jpa:
+    open-in-view: false
