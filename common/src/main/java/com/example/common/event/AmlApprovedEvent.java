@@ -1,19 +1,11 @@
 package com.example.common.event;
 
-public class AmlApprovedEvent extends BaseEvent {
+import java.util.Objects;
 
-    private final String transactionId;
-
-    public AmlApprovedEvent(
-            String correlationId,
-            String transactionId
-    ) {
-        super(correlationId);
-        this.transactionId = transactionId;
-    }
-
-    public String getTransactionId() {
-        return transactionId;
+public record AmlApprovedEvent(EventMetadata metadata, String transactionId) implements DomainEvent  {
+    public AmlApprovedEvent {
+        Objects.requireNonNull(metadata);
+        Objects.requireNonNull(transactionId, "transactionId must not be null");
     }
 }
 

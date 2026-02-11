@@ -23,14 +23,14 @@ public class ComplianceEventConsumer {
 
         // Simplified decision logic
         DecisionStatus status =
-                event.getAmount().signum() > 0
+                event.amount().signum() > 0
                         ? DecisionStatus.APPROVED
                         : DecisionStatus.REJECTED;
 
         DecisionMadeEvent decision =
                 new DecisionMadeEvent(
-                        event.getCorrelationId(),
-                        event.getTransactionId(),
+                        event.metadata(),
+                        event.transactionId(),
                         status,
                         "Basic AML decision"
                 );

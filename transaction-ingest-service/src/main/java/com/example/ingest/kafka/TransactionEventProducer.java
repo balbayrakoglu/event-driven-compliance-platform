@@ -1,5 +1,6 @@
 package com.example.ingest.kafka;
 
+import com.example.common.event.EventMetadata;
 import com.example.common.event.TransactionReceivedEvent;
 import com.example.common.kafka.EventHeaders;
 import com.example.common.kafka.SchemaVersion;
@@ -25,17 +26,17 @@ public class TransactionEventProducer {
 
         TransactionReceivedEvent event =
                 new TransactionReceivedEvent(
-                        correlationId,
+                        EventMetadata.create(correlationId),
                         request.transactionId(),
+                        request.accountId(),
                         request.amount(),
-                        request.currency(),
-                        request.accountId()
+                        request.currency()
                 );
 
         ProducerRecord<String, Object> record =
                 new ProducerRecord<>(
                         TopicConstants.TRANSACTION_EVENTS_V1,
-                        event.getTransactionId(),
+                        event.transactionId(),
                         event
                 );
 

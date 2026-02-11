@@ -1,32 +1,16 @@
 package com.example.common.event;
 
-public class AmlDecisionCompensatedEvent extends BaseEvent {
+import java.util.Objects;
 
-    private final String transactionId;
-    private final String previousStatus;
-    private final String reason;
-
-    public AmlDecisionCompensatedEvent(
-            String correlationId,
-            String transactionId,
-            String previousStatus,
-            String reason
-    ) {
-        super(correlationId);
-        this.transactionId = transactionId;
-        this.previousStatus = previousStatus;
-        this.reason = reason;
-    }
-
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public String getPreviousStatus() {
-        return previousStatus;
-    }
-
-    public String getReason() {
-        return reason;
+public record AmlDecisionCompensatedEvent(
+        EventMetadata metadata,
+        String transactionId,
+        String previousStatus,
+        String reason
+) implements DomainEvent {
+    public AmlDecisionCompensatedEvent {
+        Objects.requireNonNull(metadata);
+        Objects.requireNonNull(transactionId);
+        Objects.requireNonNull(previousStatus);
     }
 }
