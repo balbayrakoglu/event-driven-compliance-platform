@@ -35,15 +35,15 @@ public class AmlEventConsumer {
     ) {
         try {
             amlCheckService.evaluate(event);
-            processedEventStore.markProcessed(event.getEventId());
+            processedEventStore.markProcessed(event.metadata().eventId());
             ack.acknowledge();
 
         } catch (DataIntegrityViolationException e) {
-            log.info("Duplicate event skipped: {}", event.getEventId());
+            log.info("Duplicate event skipped: {}", event.metadata().eventId());
             ack.acknowledge();
 
         } catch (Exception e) {
-            log.error("Error processing event {}", event.getEventId(), e);
+            log.error("Error processing event {}", event.metadata().eventId(), e);
             throw e;
         }
     }
